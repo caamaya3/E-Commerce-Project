@@ -1,7 +1,9 @@
 import "./App.css";
 import { useState } from "react";
-import Hero from "./components/hero";
-
+import Hero from "./components/Hero";
+import CardGroup from "./components/CardGroup";
+import Card from "./components/Card";
+import cardData from "./components/cards";
 export default function App() {
   const [searchText, setSearchText] = useState("");
   function handleChange(event: any) {
@@ -10,6 +12,7 @@ export default function App() {
   function handleSubmit() {
     alert(searchText);
   }
+  const cardsArray = cardData.data.cards;
 
   return (
     <>
@@ -42,6 +45,7 @@ export default function App() {
         </a>
       </header>
       <Hero></Hero>
+      <CardGroup cards={cardsArray}></CardGroup>{" "}
     </>
   );
 }
