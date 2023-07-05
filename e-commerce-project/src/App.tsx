@@ -4,16 +4,23 @@ import Hero from "./components/Hero";
 import CardGroup from "./components/CardGroup";
 import Card from "./components/Card";
 import cardData from "./components/cards";
-export default function App() {
+export default function App(props: any) {
   const [searchText, setSearchText] = useState("");
   function handleChange(event: any) {
     setSearchText(event.target.value);
   }
-  function handleSubmit() {
-    alert(searchText);
-  }
-  const cardsArray = cardData.data.cards;
+  const [cardArray, setCardsArray] = useState(props.initialCards);
 
+  const handleSearch = (e: any) => {
+    setSearchText(e.target.value);
+    const filteredCards = props.initialCards.filter(
+      (card: any) =>
+        card.title.toLowerCase().includes(e.target.value.toLowerCase()) ||
+        card.description.toLowerCase().includes(e.target.value.toLowerCase())
+    );
+    setCardsArray(filteredCards);
+  };
+  function handleSubmit() {}
   return (
     <>
       <header>
@@ -23,12 +30,13 @@ export default function App() {
           alt="logo"
           height={40}
         ></img>
+
         <form className="search-bar" onSubmit={handleSubmit}>
           <input
             className="search-bar"
             type="search"
             placeholder="Search"
-            onChange={handleChange}
+            onChange={handleSearch}
             value={searchText}
           />
         </form>
@@ -45,7 +53,7 @@ export default function App() {
         </a>
       </header>
       <Hero></Hero>
-      <CardGroup cards={cardsArray}></CardGroup>{" "}
+      <CardGroup cards={cardArray}></CardGroup>
     </>
   );
 }
